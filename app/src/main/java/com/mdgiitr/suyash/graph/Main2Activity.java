@@ -47,9 +47,14 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     //fail below is only a hint to the system. Events may be received faster or slower than the specified rate. Usually events are received faster.
     private int SENSOR_SAMPLING_PERIOD = 1; //in milliseconds
     private float SENSOR_SAMPLING_PERIOD_inSeconds = 0.001F;
+
     public static XYSeries series;
+
     private ArrayList<String> listZ;
     private ArrayList<String> listToShow;
+
+    private ArrayList<Float> listZforGraph;
+    private ArrayList<Long> listTIMEforGraph;
 
     private int ct;
 
@@ -59,6 +64,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         setContentView(R.layout.activity_main2);
 
         startingTime=System.currentTimeMillis();
+
+        listZforGraph=new ArrayList<Float>();
+        listTIMEforGraph=new ArrayList<Long>();
 
         textView = (TextView) findViewById(R.id.id_textView);
         btn_showList = (Button) findViewById(R.id.id_btn_showValues);
@@ -85,7 +93,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
         Number[] xVals = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
         Number[] yVals = {0.0000000002,-0.000000001,0.00002,0.9,-0.7,-0.005,0.0000004,-0.000000002,0.0000000000001};
-        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
+//        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
+        series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
 
 
 
@@ -115,6 +124,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 arrayAdapter.notifyDataSetChanged();
                 startingTime=newTime;
                 dataPointsArrayList.clear();
+
+                listTIMEforGraph.clear();
+                listZforGraph.clear();
             }
         });
     }
@@ -148,7 +160,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 vz1 = vz2;
                 z1 = z2;
 
-                dataPointsArrayList.add(new DataPoint((float) (newTime-startingTime)/10,(z2*10+5)));
+//                dataPointsArrayList.add(new DataPoint((float) (newTime-startingTime)/10,(z2*10+5)));
+                listZforGraph.add(z2);
+                listTIMEforGraph.add(newTime-startingTime);
             } else {
                 ct++;
                 if (ct >= 2) {
