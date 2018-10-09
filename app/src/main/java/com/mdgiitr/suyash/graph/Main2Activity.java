@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYSeries;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.mdgiitr.suyash.graph.R;
 import com.mdgiitr.suyash.graphkit.DataPoint;
 
@@ -48,7 +49,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     private int SENSOR_SAMPLING_PERIOD = 1; //in milliseconds
     private float SENSOR_SAMPLING_PERIOD_inSeconds = 0.001F;
 
-    public static XYSeries series;
+    public static LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
 
     private ArrayList<String> listZ;
     private ArrayList<String> listToShow;
@@ -65,8 +66,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
         startingTime=System.currentTimeMillis();
 
-        listZforGraph=new ArrayList<Float>();
-        listTIMEforGraph=new ArrayList<Long>();
+//        listZforGraph=new ArrayList<Float>();
+//        listTIMEforGraph=new ArrayList<Long>();
 
         textView = (TextView) findViewById(R.id.id_textView);
         btn_showList = (Button) findViewById(R.id.id_btn_showValues);
@@ -84,6 +85,14 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         listToShow = new ArrayList<String>();
 
         dataPointsArrayList=new ArrayList<>();
+
+         series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>(new com.jjoe64.graphview.series.DataPoint[] {
+                new com.jjoe64.graphview.series.DataPoint(0, 1),
+                new com.jjoe64.graphview.series.DataPoint(1, 5),
+                new com.jjoe64.graphview.series.DataPoint(2, 3),
+                new com.jjoe64.graphview.series.DataPoint(3, 2),
+                new com.jjoe64.graphview.series.DataPoint(4, 6)
+        });
 
         arrayAdapter = new ArrayAdapter<String>(
                 this,
@@ -124,25 +133,25 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 startingTime=newTime;
                 dataPointsArrayList.clear();
 
-                listTIMEforGraph.clear();
-                listZforGraph.clear();
+//                listTIMEforGraph.clear();
+//                listZforGraph.clear();
             }
         });
     }
 
-//    public void fillListToShow() {
-//        Iterator<String> iterator = listZ.iterator();
-//        while (iterator.hasNext()) {
-//            for (int i = 0; i <= 0; i++) {
-//                if (iterator.hasNext()) {
-//                    iterator.next();
-//                }
-//            }
-//            if (iterator.hasNext()) {
-//                listToShow.add(iterator.next());
-//            }
-//        }
-//    }
+    public void fillListToShow() {
+        Iterator<String> iterator = listZ.iterator();
+        while (iterator.hasNext()) {
+            for (int i = 0; i <= 0; i++) {
+                if (iterator.hasNext()) {
+                    iterator.next();
+                }
+            }
+            if (iterator.hasNext()) {
+                listToShow.add(iterator.next());
+            }
+        }
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -160,9 +169,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 z1 = z2;
 
 //                dataPointsArrayList.add(new DataPoint((float) (newTime-startingTime)/10,(z2*10+5)));
-                listZforGraph.add(z2*100);
-                listTIMEforGraph.add((newTime-startingTime)/1000);
-                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
+//                listZforGraph.add(z2*100);
+//                listTIMEforGraph.add((newTime-startingTime)/1000);
+//                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
 
             } else {
                 ct++;
