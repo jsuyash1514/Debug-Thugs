@@ -12,47 +12,48 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name="com.mdgiitr.suyash.graph.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".PieChartLanding" />
+        <activity
+            android:name=".LineGraphLanding"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BarGraphLanding"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FreeCurveLanding"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LineGraphNew"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LinePointNew"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LineGraphDisplay"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BarPointNew"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BarGraphNew"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BarGraphDisplay"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PieChartNew" />
+        <activity android:name=".PieChartAddEntry" />
+        <activity android:name=".PieChartResult" />
+        <activity android:name=".Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mdgiitr.suyash.graph.PieChartLanding" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.LineGraphLanding"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.BarGraphLanding"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.FreeCurveLanding"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.LineGraphNew"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.LinePointNew"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.LineGraphDisplay"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.BarPointNew"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.BarGraphNew"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.mdgiitr.suyash.graph.BarGraphDisplay"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.mdgiitr.suyash.graph.PieChartNew" />
-        <activity android:name="com.mdgiitr.suyash.graph.PieChartAddEntry" />
-        <activity android:name="com.mdgiitr.suyash.graph.PieChartResult"/>
-
+        <activity android:name=".GraphOFz"></activity>
     </application>
 
 </manifest>
