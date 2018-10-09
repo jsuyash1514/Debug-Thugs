@@ -20,7 +20,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
-public class Main2Activity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     public static LineGraphSeries<DataPoint> series;
     private SensorManager sensorManager;
@@ -43,7 +43,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
         startingTime = System.currentTimeMillis();
 
@@ -57,7 +57,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
-        sensorManager.registerListener(Main2Activity.this, accelerometer, SENSOR_SAMPLING_PERIOD * 1000);
+        sensorManager.registerListener(MainActivity.this, accelerometer, SENSOR_SAMPLING_PERIOD * 1000);
 
         listZ = new ArrayList<String>();
         listToShow = new ArrayList<String>();
@@ -76,8 +76,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         btn_showGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Main2Activity.this, GraphOFz.class));
-                Toast.makeText(Main2Activity.this, "TESTING", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, GraphOfZ.class));
+                Toast.makeText(MainActivity.this, "TESTING", Toast.LENGTH_SHORT).show();
             }
         });
 

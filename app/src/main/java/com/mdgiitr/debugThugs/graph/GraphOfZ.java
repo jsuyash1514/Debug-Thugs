@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.jjoe64.graphview.GraphView;
 
-public class GraphOFz extends AppCompatActivity {
+public class GraphOfZ extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph_ofz);
+        setContentView(R.layout.activity_graph_of_z);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
@@ -25,7 +25,7 @@ public class GraphOFz extends AppCompatActivity {
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
 
-        graph.addSeries(Main2Activity.series);
+        graph.addSeries(MainActivity.series);
 
     }
 
