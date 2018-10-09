@@ -31,11 +31,17 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     private SensorManager sensorManager;
     private Sensor accelerometer;
 
+    private ArrayList<Float> roadCondition;
+
+    ArrayList<Float> currentListOfZ;
+    ArrayList<Long> currentListOfTIME;
+
     private TextView textView;
     private ListView listView;
     private Button btn_showList;
     private Button btn_resetValues;
     private Button btn_showGraph;
+    private Button btn_showRoadCondtn;
     private ArrayAdapter<String> arrayAdapter;
 
     private long startingTime;
@@ -63,15 +69,18 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        startingTime=System.currentTimeMillis();
+        startingTime = System.currentTimeMillis();
 
-        listZforGraph=new ArrayList<Float>();
-        listTIMEforGraph=new ArrayList<Long>();
+        roadCondition = new ArrayList<>();
+
+        listZforGraph = new ArrayList<Float>();
+        listTIMEforGraph = new ArrayList<Long>();
 
         textView = (TextView) findViewById(R.id.id_textView);
         btn_showList = (Button) findViewById(R.id.id_btn_showValues);
-        btn_showGraph=(Button)findViewById(R.id.id_btn_showGraph);
+        btn_showGraph = (Button) findViewById(R.id.id_btn_showGraph);
         listView = (ListView) findViewById(R.id.id_listView);
+        btn_showRoadCondtn=(Button)findViewById(R.id.id_btn_showRoadCondition);
         btn_resetValues = (Button) findViewById(R.id.id_btnResetValues);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -83,7 +92,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         listZ = new ArrayList<String>();
         listToShow = new ArrayList<String>();
 
-        dataPointsArrayList=new ArrayList<>();
+        dataPointsArrayList = new ArrayList<>();
 
         arrayAdapter = new ArrayAdapter<String>(
                 this,
@@ -96,12 +105,22 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 //        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
 
 
-
-
         btn_showGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Main2Activity.this,GraphOFz.class));
+                series = new SimpleXYSeries(listTIMEforGraph, listZforGraph, "my series");
+
+                startActivity(new Intent(Main2Activity.this, GraphOFz.class));
+                Toast.makeText(Main2Activity.this, "TESTING", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_showRoadCondtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                series = new SimpleXYSeries(currentListOfTIME, roadCondition, "my series");
+
+                startActivity(new Intent(Main2Activity.this, GraphOFz.class));
                 Toast.makeText(Main2Activity.this, "TESTING", Toast.LENGTH_SHORT).show();
             }
         });
@@ -121,7 +140,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 listZ.clear();
                 listToShow.clear();
                 arrayAdapter.notifyDataSetChanged();
-                startingTime=newTime;
+                startingTime = newTime;
                 dataPointsArrayList.clear();
 
                 listTIMEforGraph.clear();
@@ -144,6 +163,34 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 //        }
 //    }
 
+    public void creatingVarianceData() {
+        float[] x = new float[20];
+        currentListOfZ = (ArrayList<Float>) listZforGraph.clone();
+        currentListOfTIME = (ArrayList<Long>) listTIMEforGraph.clone();
+        Iterator<Float> iterator = currentListOfZ.iterator();
+        while (iterator.hasNext()){
+            for (int i=0;i<19;i++){
+                x[i]=x[i+1];
+            }
+            x[20]=iterator.next();
+            roadCondition.add(variance(x));
+        }
+    }
+
+    public float variance(float[] x) {
+        float variance = 0f;
+        float average = 0F;
+        for (int i = 0; i < x.length; i++) {
+            average = average + x[i];
+        }
+        average = average / x.length;
+        for (int i = 0; i < x.length; i++) {
+            variance = (float) Math.pow((double) (x[i] - average), 2);
+        }
+        variance = variance / (x.length - 1);
+        return variance;
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         textView.setText("X : " + event.values[0] + "\nY : " + event.values[1] + "\nZ : " + event.values[2]);
@@ -160,9 +207,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 z1 = z2;
 
 //                dataPointsArrayList.add(new DataPoint((float) (newTime-startingTime)/10,(z2*10+5)));
-                listZforGraph.add(z2*100);
-                listTIMEforGraph.add((newTime-startingTime)/1000);
-                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
+
 
             } else {
                 ct++;
@@ -171,6 +216,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 }
             }
         }
+        listZforGraph.add(z2 * 10);
+        listTIMEforGraph.add((newTime - startingTime) / 100);
+
         prevTime = newTime;
     }
 
