@@ -15,10 +15,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYSeries;
 import com.mdgiitr.suyash.graph.R;
 import com.mdgiitr.suyash.graphkit.DataPoint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.lang.Math;
 
@@ -43,7 +47,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
     //fail below is only a hint to the system. Events may be received faster or slower than the specified rate. Usually events are received faster.
     private int SENSOR_SAMPLING_PERIOD = 1; //in milliseconds
     private float SENSOR_SAMPLING_PERIOD_inSeconds = 0.001F;
-
+    public static XYSeries series;
     private ArrayList<String> listZ;
     private ArrayList<String> listToShow;
 
@@ -78,6 +82,13 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 android.R.layout.simple_list_item_1,
                 listZ);
         listView.setAdapter(arrayAdapter);
+
+        Number[] xVals = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
+        Number[] yVals = {0.0000000002,-0.000000001,0.00002,0.9,-0.7,-0.005,0.0000004,-0.000000002,0.0000000000001};
+        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
+
+
+
 
         btn_showGraph.setOnClickListener(new View.OnClickListener() {
             @Override

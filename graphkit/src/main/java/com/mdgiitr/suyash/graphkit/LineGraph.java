@@ -376,7 +376,7 @@ public class LineGraph extends View {
             if (n <= 1) {
                 SCROLLABLE_X = !SCROLLABLE_X;
             } else {
-                x = Float.parseFloat(Float.toString(x).substring(0, 2));
+                x = Float.parseFloat(Float.toString(x).substring(0, 1));
                 sW = x * 100;
             }
         }

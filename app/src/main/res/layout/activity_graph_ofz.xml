@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ap="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mdgiitr.suyash.graph.GraphOFz">
-
-    <com.mdgiitr.suyash.graphkit.LineGraph
-        android:id="@+id/id_lineGraph"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:graph_color="#ff0000"
-        app:label_text_size="25"
-        app:line_thickness="8.0"
-        app:scrollablex="false"
-        app:scrollabley="false" />
+    <com.androidplot.xy.XYPlot
+        style="@style/APDefacto.Dark"
+        android:id="@+id/plot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        ap:title="A Simple XY Plot"
+        ap:rangeTitle="range"
+        ap:domainTitle="domain"
+        ap:lineLabels="left|bottom"
+        ap:lineLabelRotationBottom="-45"/>
 
 </LinearLayout>
