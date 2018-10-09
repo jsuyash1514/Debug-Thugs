@@ -1,4 +1,4 @@
-package com.example.suyash.graph;
+package com.mdgiitr.suyash.graph;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
