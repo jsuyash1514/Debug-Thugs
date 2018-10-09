@@ -64,14 +64,14 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        startingTime=System.currentTimeMillis();
+        startingTime = System.currentTimeMillis();
 
 //        listZforGraph=new ArrayList<Float>();
 //        listTIMEforGraph=new ArrayList<Long>();
 
         textView = (TextView) findViewById(R.id.id_textView);
         btn_showList = (Button) findViewById(R.id.id_btn_showValues);
-        btn_showGraph=(Button)findViewById(R.id.id_btn_showGraph);
+        btn_showGraph = (Button) findViewById(R.id.id_btn_showGraph);
         listView = (ListView) findViewById(R.id.id_listView);
         btn_resetValues = (Button) findViewById(R.id.id_btnResetValues);
 
@@ -84,16 +84,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         listZ = new ArrayList<String>();
         listToShow = new ArrayList<String>();
 
-        dataPointsArrayList=new ArrayList<>();
+        dataPointsArrayList = new ArrayList<>();
 
-         series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>(new com.jjoe64.graphview.series.DataPoint[] {
-                new com.jjoe64.graphview.series.DataPoint(0, 1),
-                new com.jjoe64.graphview.series.DataPoint(1, 5),
-                new com.jjoe64.graphview.series.DataPoint(2, 3),
-                new com.jjoe64.graphview.series.DataPoint(3, 2),
-                new com.jjoe64.graphview.series.DataPoint(4, 6)
-        });
-
+        series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
         arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -105,12 +98,10 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 //        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
 
 
-
-
         btn_showGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Main2Activity.this,GraphOFz.class));
+                startActivity(new Intent(Main2Activity.this, GraphOFz.class));
                 Toast.makeText(Main2Activity.this, "TESTING", Toast.LENGTH_SHORT).show();
             }
         });
@@ -130,7 +121,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 listZ.clear();
                 listToShow.clear();
                 arrayAdapter.notifyDataSetChanged();
-                startingTime=newTime;
+                startingTime = newTime;
                 dataPointsArrayList.clear();
 
 //                listTIMEforGraph.clear();
@@ -172,6 +163,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 //                listZforGraph.add(z2*100);
 //                listTIMEforGraph.add((newTime-startingTime)/1000);
 //                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
+                series.appendData(new com.jjoe64.graphview.series.DataPoint((double) (newTime-startingTime)/100,(double) (z2*10+5)),true,1000000000,false);
 
             } else {
                 ct++;

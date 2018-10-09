@@ -44,12 +44,11 @@ public class GraphOFz extends AppCompatActivity {
 
 
         graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(-150);
-        graph.getViewport().setMaxY(150);
+        graph.getViewport().setMinY(-5);
+        graph.getViewport().setMaxY(5);
 
         graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(4);
-        graph.getViewport().setMaxX(80);
+        graph.getViewport().setMinX(0);
 
         // enable scaling and scrolling
         graph.getViewport().setScalable(true);
