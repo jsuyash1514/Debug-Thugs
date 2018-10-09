@@ -91,10 +91,9 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 listZ);
         listView.setAdapter(arrayAdapter);
 
-        Number[] xVals = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
-        Number[] yVals = {0.0000000002,-0.000000001,0.00002,0.9,-0.7,-0.005,0.0000004,-0.000000002,0.0000000000001};
+//        Number[] xVals = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
+//        Number[] yVals = {0.0000000002,-0.000000001,0.00002,0.9,-0.7,-0.005,0.0000004,-0.000000002,0.0000000000001};
 //        series = new SimpleXYSeries(Arrays.asList(xVals), Arrays.asList(yVals), "my series");
-        series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
 
 
 
@@ -161,8 +160,10 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
                 z1 = z2;
 
 //                dataPointsArrayList.add(new DataPoint((float) (newTime-startingTime)/10,(z2*10+5)));
-                listZforGraph.add(z2);
-                listTIMEforGraph.add(newTime-startingTime);
+                listZforGraph.add(z2*100);
+                listTIMEforGraph.add((newTime-startingTime)/1000);
+                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
+
             } else {
                 ct++;
                 if (ct >= 2) {
