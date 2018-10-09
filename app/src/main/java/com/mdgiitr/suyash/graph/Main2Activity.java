@@ -86,13 +86,7 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 
         dataPointsArrayList=new ArrayList<>();
 
-         series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>(new com.jjoe64.graphview.series.DataPoint[] {
-                new com.jjoe64.graphview.series.DataPoint(0, 1),
-                new com.jjoe64.graphview.series.DataPoint(1, 5),
-                new com.jjoe64.graphview.series.DataPoint(2, 3),
-                new com.jjoe64.graphview.series.DataPoint(3, 2),
-                new com.jjoe64.graphview.series.DataPoint(4, 6)
-        });
+         series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
 
         arrayAdapter = new ArrayAdapter<String>(
                 this,
@@ -172,6 +166,8 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
 //                listZforGraph.add(z2*100);
 //                listTIMEforGraph.add((newTime-startingTime)/1000);
 //                series=new SimpleXYSeries(listTIMEforGraph,listZforGraph,"my series");
+
+                series.appendData(new com.jjoe64.graphview.series.DataPoint((double) (newTime-startingTime)/1000,(double) (z2*10)),false,1000000000,false);
 
             } else {
                 ct++;
