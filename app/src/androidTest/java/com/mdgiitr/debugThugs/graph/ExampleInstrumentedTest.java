@@ -1,4 +1,4 @@
-package com.mdgiitr.suyash.graph;
+package com.mdgiitr.debugThugs.graph;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

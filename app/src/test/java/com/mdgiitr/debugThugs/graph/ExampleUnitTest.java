@@ -1,4 +1,4 @@
-package com.mdgiitr.suyash.graphkit;
+package com.mdgiitr.debugThugs.graph;
 
 import org.junit.Test;
 
