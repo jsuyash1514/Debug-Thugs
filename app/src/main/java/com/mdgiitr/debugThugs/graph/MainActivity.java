@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private long prevTime, newTime;
     private int SENSOR_SAMPLING_PERIOD = 1; //in milliseconds
     private float SENSOR_SAMPLING_PERIOD_inSeconds = 0.001F;
-    private ArrayList<String> listZ;
-    private ArrayList<String> listToShow;
+    private ArrayList<String> listForListView;
+//    private ArrayList<String> listToShow;
     private int ct;
 
     @Override
@@ -59,18 +59,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         sensorManager.registerListener(MainActivity.this, accelerometer, SENSOR_SAMPLING_PERIOD * 1000);
 
-        listZ = new ArrayList<String>();
-        listToShow = new ArrayList<String>();
+        listForListView = new ArrayList<String>();
+//        listToShow = new ArrayList<String>();
 
 
         series = new LineGraphSeries<>();
 
-
-        series = new LineGraphSeries<>();
         arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                listZ);
+                listForListView);
         listView.setAdapter(arrayAdapter);
 
         btn_showGraph.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +90,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btn_resetValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                series = new LineGraphSeries<>();
                 az1 = az2 = vz1 = vz2 = z1 = z2 = 0;
-                listZ.clear();
-                listToShow.clear();
+                listForListView.clear();
+//                listToShow.clear();
                 arrayAdapter.notifyDataSetChanged();
                 startingTime = newTime;
             }
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 az2 = event.values[2];
                 vz2 = vz1 + ((az2 + az1) / 2) * SENSOR_SAMPLING_PERIOD_inSeconds;
                 z2 = z1 + (((vz1 + vz2) / 2) * SENSOR_SAMPLING_PERIOD_inSeconds) + ((1 / 2) * ((az1 + az2) / 2) * SENSOR_SAMPLING_PERIOD_inSeconds * SENSOR_SAMPLING_PERIOD_inSeconds);
-                listZ.add("Z = " + z2 + " V = " + vz2);
+                listForListView.add("Z = " + z2 + " V = " + vz2);
                 az1 = az2;
                 vz1 = vz2;
                 z1 = z2;

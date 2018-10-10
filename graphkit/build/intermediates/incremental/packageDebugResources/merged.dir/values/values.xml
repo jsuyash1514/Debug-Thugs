@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="color" name="graph_color"/>
+    <attr format="integer" name="label_text_size"/>
+    <attr format="float" name="line_thickness"/>
+    <declare-styleable name="BarGraph">
+        <attr name="label_text_size"/>
+        <attr format="integer" name="bar_space"/>
+    </declare-styleable>
+    <declare-styleable name="EditGraphView">
+        <attr name="graph_color"/>
+        <attr name="line_thickness"/>
+        <attr format="integer" name="touch_tolerance"/>
+    </declare-styleable>
+    <declare-styleable name="LineGraph">
+        <attr format="boolean" name="scrollablex"/>
+        <attr format="boolean" name="scrollabley"/>
+        <attr name="graph_color"/>
+        <attr name="line_thickness"/>
+        <attr name="label_text_size"/>
+        <attr format="color" name="grid_color"/>
+        <attr format="integer" name="max_divisions"/>
+    </declare-styleable>
+    <declare-styleable name="PieChart">
+        <attr name="label_text_size"/>
+    </declare-styleable>
+    <string name="app_name">GraphLibrary</string>
+</resources>
