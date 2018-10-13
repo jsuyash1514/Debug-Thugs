@@ -19,6 +19,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ArrayList<String> listForListView;
 //    private ArrayList<String> listToShow;
     private int ct;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startingTime = newTime;
             }
         });
+    }
+
+    public void creatingVarianceData() {
+        float[] x = new float[20];
+        currentListOfZ = (ArrayList<Float>) listZforGraph.clone();
+        currentListOfTIME = (ArrayList<Long>) listTIMEforGraph.clone();
+        Iterator<Float> iterator = currentListOfZ.iterator();
+        while (iterator.hasNext()){
+            for (int i=0;i<19;i++){
+                x[i]=x[i+1];
+            }
+            x[20]=iterator.next();
+            roadCondition.add(variance(x));
+        }
+    }
+
+    public float variance(float[] x) {
+        float variance = 0f;
+        float average = 0F;
+        for (int i = 0; i < x.length; i++) {
+            average = average + x[i];
+        }
+        average = average / x.length;
+        for (int i = 0; i < x.length; i++) {
+            variance = (float) Math.pow((double) (x[i] - average), 2);
+        }
+        variance = variance / (x.length - 1);
+        return variance;
     }
 
 
