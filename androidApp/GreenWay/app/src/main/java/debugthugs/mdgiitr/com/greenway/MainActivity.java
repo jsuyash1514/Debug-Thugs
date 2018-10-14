@@ -34,6 +34,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.maps.model.LatLng;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public static ArrayList<Float> angleVariation;
     public static ArrayList<Float> variance;
     public static ArrayList<Byte> roadConditionData;
+    public static ArrayList<LatLng> arrayLocation;
+    public static ArrayList<Byte> compressedData;
     private Float aZ_prev;
     private Float w2Y, w1Y, Ly, w2X, w1X, Lx;
 
@@ -110,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             requestPermission();
         }
 
+        arrayLocation = new ArrayList<>();
+
         value = new ArrayList<>();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer_g = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -127,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 return;
             }
             location = locationManager.getLastKnownLocation(mprovider);
-            locationManager.requestLocationUpdates(mprovider, 50, (float) 0.01, this);
+            locationManager.requestLocationUpdates(mprovider, 10, (float) 0.01, this);
 
             if (location != null)
                 onLocationChanged(location);
@@ -243,20 +248,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 while (i1.hasNext() && i2.hasNext()) {
                     temp1 = (Float) i1.next();
                     temp2 = (Float) i2.next();
-                    if (temp1>120){
-                        roadConditionData.add((byte)1);
-                    }
-                    else{
-                        if(temp2>0.4){
-                            roadConditionData.add((byte)2);
-                        }
-                        else {
-                            roadConditionData.add((byte)0);
+                    if (temp1 > 120) {
+                        roadConditionData.add((byte) 1);
+                    } else {
+                        if (temp2 > 0.4) {
+                            roadConditionData.add((byte) 2);
+                        } else {
+                            roadConditionData.add((byte) 0);
                         }
                     }
                 }
+                dataCompress();
 
-                startActivity(new Intent(MainActivity.this,RoadCondition.class));
+                startActivity(new Intent(MainActivity.this, RoadCondition.class));
+
             }
         });
 
@@ -574,6 +579,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
         newTime = System.currentTimeMillis();
         if (newTime - prevTime >= SENSOR_SAMPLING_PERIOD) {
+//            arrayLocation.add(new LatLng(location.getLatitude(), location.getLongitude()));
             if (event.sensor.equals(accelerometer)) {
                 if (Math.abs(event.values[2]) > 0.5) {
                     aZ.add(event.values[2]);
@@ -625,5 +631,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    public void dataCompress() {
+        compressedData = new ArrayList<>();
+        Iterator iterator = roadConditionData.iterator();
+        Iterator temp;
+        byte curr = 0;
+        byte prev = 0;
+        int ct1 = 0;
+        while (iterator.hasNext()) {
+            prev = curr;
+            curr = (byte) iterator.next();
+            if (curr != prev) {
+                temp = iterator;
+                for (int i = 0; i < 12; i++) {
+                    if (temp.hasNext()) {
+                        if ((byte) temp.next() == prev) {
+                            if (ct1 >= 12) {
+                                for (int j = 0; j <= i; j++) {
+                                    compressedData.add(prev);
+                                    ct1++;
+                                }
+                                ct1=0;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            } else {
+                compressedData.add(curr);
+                ct1++;
+            }
+        }
     }
 }
